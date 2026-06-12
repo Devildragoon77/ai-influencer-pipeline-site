@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auto-Posting to Instagram with the Official Graph API and n8n (2026)</title>
+<meta name="description" content="How to publish posts, stories, and reels to Instagram automatically using the official Graph API and n8n — token setup, the two-step publish flow, and the gotchas.">
+<style>
+  :root { --bg:#0a0a0c; --panel:#141418; --text:#e8e8ec; --dim:#9a9aa4; --accent:#ff90e8; --line:#26262c; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font:17px/1.7 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:40px 20px 80px; }
+  a { color:var(--accent); }
+  h1 { font-size:2rem; line-height:1.25; margin:18px 0 6px; letter-spacing:-.4px; }
+  h2 { font-size:1.35rem; margin:34px 0 10px; }
+  h3 { font-size:1.1rem; margin:24px 0 8px; }
+  p, li { color:#c9c9d2; margin-bottom:14px; }
+  ul, ol { margin:0 0 14px 22px; }
+  li { margin-bottom:6px; }
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:1px 6px; font-size:.9em; }
+  pre { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:14px; overflow-x:auto; margin-bottom:14px; }
+  pre code { border:0; padding:0; }
+  .crumb { color:var(--dim); font-size:.85rem; }
+  .crumb a { color:var(--dim); }
+  .meta { color:var(--dim); font-size:.9rem; margin-bottom:24px; }
+  .cta { background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:0 10px 10px 0; padding:18px 20px; margin:30px 0; }
+  .cta a { font-weight:700; }
+  table { border-collapse:collapse; width:100%; margin-bottom:14px; font-size:.92rem; }
+  th, td { border:1px solid var(--line); padding:8px 10px; text-align:left; color:#c9c9d2; }
+  th { background:var(--panel); }
+  footer { border-top:1px solid var(--line); margin-top:50px; padding-top:20px; color:var(--dim); font-size:.85rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<p class="crumb"><a href="../index.html">AI Influencer Pipeline</a> / <a href="index.html">Guides</a></p>
+<h1>Auto-Posting to Instagram with the Graph API + n8n</h1>
+<p class="meta">Updated June 2026 · Written from a live production system, not theory.</p>
+
+<p>You do not need a third-party scheduling tool or a sketchy browser bot to auto-post to Instagram. The official Graph API handles posts, stories, and reels — free, allowed, and reliable. Here's the working setup.</p>
+
+<h2>Prerequisites</h2>
+<ul>
+<li>An Instagram <strong>professional</strong> account (creator or business) linked to a Facebook Page</li>
+<li>A Meta developer app with the Instagram-Login flavor and the "Manage messaging & content" use case</li>
+<li>A long-lived access token with <code>instagram_business_basic</code> and <code>instagram_business_content_publish</code></li>
+</ul>
+<p>Two facts that save hours: tokens of this app flavor call <code>graph.instagram.com</code> (not graph.facebook.com), and own-account automation works with standard access — <strong>no Meta app review needed</strong>.</p>
+
+<h2>The two-step publish flow</h2>
+<p>Publishing is always: create a media container, then publish it.</p>
+<pre><code>POST https://graph.instagram.com/v23.0/{ig-user-id}/media
+     ?image_url={public-url}&caption={caption}&access_token={token}
+# returns {"id": "container-id"}
+
+POST https://graph.instagram.com/v23.0/{ig-user-id}/media_publish
+     ?creation_id={container-id}&access_token={token}</code></pre>
+<p>In n8n these are two HTTP Request nodes with a short Wait between (containers need a few seconds to process; videos need longer — poll the container's <code>status_code</code> until <code>FINISHED</code> for reels).</p>
+<ul>
+<li><strong>Stories:</strong> same flow with <code>media_type=STORIES</code></li>
+<li><strong>Reels:</strong> <code>media_type=REELS</code> + <code>video_url</code> (must be a publicly fetchable .mp4)</li>
+<li><strong>Image hosting:</strong> the API fetches your media by URL, so generated images must live somewhere public first — a free Cloudinary account works.</li>
+</ul>
+
+<h2>Gotchas from production</h2>
+<ul>
+<li><strong>n8n's default timezone is America/New_York.</strong> If your instance isn't configured, your "8 PM" cron fires at New York time. Set <code>GENERIC_TIMEZONE</code> or per-workflow <code>settings.timezone</code>.</li>
+<li><strong>Page tokens expire (~60 days).</strong> Calendar the rotation or build a refresh workflow; silent token death is the most common "it stopped working".</li>
+<li><strong>Use a content queue, not direct posting.</strong> A Google Sheet with <code>id | status | image_url | caption | scheduled_time</code> lets you approve items before a separate publisher workflow picks up <code>approved</code> rows. Decoupling generation from publishing is what makes the system safe to leave unattended.</li>
+<li><strong>Story link stickers can't be placed via API</strong> — links in stories remain a manual action. Highlights have no public API either.</li>
+</ul>
+
+<div class="cta">All of this is prebuilt in the <a href="https://lionheart886.gumroad.com/l/ai-influencer-pipeline-kit">AI Influencer Pipeline Kit</a> — 13 import-ready n8n workflows including publishers for posts, stories, and reels.</div>
+<footer>All guides are based on the stack behind a real automated Instagram persona.
+Get the full working system: <a href="https://lionheart886.gumroad.com/l/ai-influencer-pipeline-kit">AI Influencer Pipeline Kit</a>
+· <a href="https://lionheart886.gumroad.com/l/reel-dna-extractor">Reel DNA Extractor</a></footer>
+</div>
+</body>
+</html>

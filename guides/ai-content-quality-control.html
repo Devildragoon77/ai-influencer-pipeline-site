@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Quality Control for Generated Content: the PASS/FAIL Gate Pattern</title>
+<meta name="description" content="How to stop bad AI generations from reaching your audience: a Claude-judged PASS/FAIL gate with feedback loops, retry caps, and the design rules that make it reliable.">
+<style>
+  :root { --bg:#0a0a0c; --panel:#141418; --text:#e8e8ec; --dim:#9a9aa4; --accent:#ff90e8; --line:#26262c; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font:17px/1.7 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:40px 20px 80px; }
+  a { color:var(--accent); }
+  h1 { font-size:2rem; line-height:1.25; margin:18px 0 6px; letter-spacing:-.4px; }
+  h2 { font-size:1.35rem; margin:34px 0 10px; }
+  h3 { font-size:1.1rem; margin:24px 0 8px; }
+  p, li { color:#c9c9d2; margin-bottom:14px; }
+  ul, ol { margin:0 0 14px 22px; }
+  li { margin-bottom:6px; }
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:1px 6px; font-size:.9em; }
+  pre { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:14px; overflow-x:auto; margin-bottom:14px; }
+  pre code { border:0; padding:0; }
+  .crumb { color:var(--dim); font-size:.85rem; }
+  .crumb a { color:var(--dim); }
+  .meta { color:var(--dim); font-size:.9rem; margin-bottom:24px; }
+  .cta { background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:0 10px 10px 0; padding:18px 20px; margin:30px 0; }
+  .cta a { font-weight:700; }
+  table { border-collapse:collapse; width:100%; margin-bottom:14px; font-size:.92rem; }
+  th, td { border:1px solid var(--line); padding:8px 10px; text-align:left; color:#c9c9d2; }
+  th { background:var(--panel); }
+  footer { border-top:1px solid var(--line); margin-top:50px; padding-top:20px; color:var(--dim); font-size:.85rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<p class="crumb"><a href="../index.html">AI Influencer Pipeline</a> / <a href="index.html">Guides</a></p>
+<h1>The AI Quality Gate: Stop Bad Generations Before They Post</h1>
+<p class="meta">Updated June 2026 · Written from a live production system, not theory.</p>
+
+<p>Anyone can automate content generation. The difference between an account that grows and one that looks like a bot farm is what happens <em>between</em> generation and publishing. The pattern that works in production is a strict AI judge with a feedback loop.</p>
+
+<h2>The contract</h2>
+<p>After each generation, a vision-capable model (we use Claude) receives the image and the original spec, and must reply with exactly one line:</p>
+<pre><code>PASS
+— or —
+FAIL: &lt;specific reason — e.g. "left hand has six fingers", "lighting is flat frontal, spec requires hard side light"&gt;</code></pre>
+<p>Three design rules make this reliable:</p>
+<ol>
+<li><strong>Single-line contract, checked mechanically.</strong> The workflow checks <code>startsWith("PASS")</code> — no parsing essays, no ambiguity.</li>
+<li><strong>Failure reasons feed the next attempt.</strong> The FAIL text is injected into the regeneration prompt ("previous attempt failed because…"). This converts retries from coin flips into corrections.</li>
+<li><strong>Cap attempts at 3.</strong> Past three, you're burning credits on a prompt that needs human eyes. The item goes to a rejected queue instead.</li>
+</ol>
+
+<h2>Order of operations matters</h2>
+<p>Upload the image to public hosting <em>before</em> QC, not after. Judge models fetch images server-side, and most generation providers' artifact URLs aren't publicly fetchable. Uploading first also means the approved URL is the exact one you publish — no second upload, no mismatch.</p>
+
+<h2>What to put in the judge's rubric</h2>
+<ul>
+<li>Anatomy (hands, teeth, eyes — still the top AI tells in 2026)</li>
+<li>Identity match against the persona's locked reference</li>
+<li>Spec compliance: pose, framing, lighting, camera finish</li>
+<li>Artifacts: extra limbs/objects, melted text, warped backgrounds, accidental grain or vignette the spec didn't ask for</li>
+</ul>
+
+<h2>The economics</h2>
+<p>A QC call costs a fraction of a cent of API time; a failed generation costs real credits and a bad post costs audience trust. In production, roughly 30–50% of generations fail the first attempt — the gate plus feedback loop converts most of those into clean second attempts. Add a human approval tap (Telegram buttons work well) as the final layer: AI QC catches defects, humans catch "technically fine but off-brand".</p>
+
+<div class="cta">This exact QC chain ships preconfigured in the <a href="https://lionheart886.gumroad.com/l/ai-influencer-pipeline-kit">AI Influencer Pipeline Kit</a>.</div>
+<footer>All guides are based on the stack behind a real automated Instagram persona.
+Get the full working system: <a href="https://lionheart886.gumroad.com/l/ai-influencer-pipeline-kit">AI Influencer Pipeline Kit</a>
+· <a href="https://lionheart886.gumroad.com/l/reel-dna-extractor">Reel DNA Extractor</a></footer>
+</div>
+</body>
+</html>

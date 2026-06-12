@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>n8n vs Zapier vs Make for Social Media Automation (2026, Honest Comparison)</title>
+<meta name="description" content="Why self-hosted n8n wins for AI content pipelines: cost at volume, code nodes, loops and retries — and when Zapier or Make is actually the better pick.">
+<style>
+  :root { --bg:#0a0a0c; --panel:#141418; --text:#e8e8ec; --dim:#9a9aa4; --accent:#ff90e8; --line:#26262c; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font:17px/1.7 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:40px 20px 80px; }
+  a { color:var(--accent); }
+  h1 { font-size:2rem; line-height:1.25; margin:18px 0 6px; letter-spacing:-.4px; }
+  h2 { font-size:1.35rem; margin:34px 0 10px; }
+  h3 { font-size:1.1rem; margin:24px 0 8px; }
+  p, li { color:#c9c9d2; margin-bottom:14px; }
+  ul, ol { margin:0 0 14px 22px; }
+  li { margin-bottom:6px; }
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:1px 6px; font-size:.9em; }
+  pre { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:14px; overflow-x:auto; margin-bottom:14px; }
+  pre code { border:0; padding:0; }
+  .crumb { color:var(--dim); font-size:.85rem; }
+  .crumb a { color:var(--dim); }
+  .meta { color:var(--dim); font-size:.9rem; margin-bottom:24px; }
+  .cta { background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:0 10px 10px 0; padding:18px 20px; margin:30px 0; }
+  .cta a { font-weight:700; }
+  table { border-collapse:collapse; width:100%; margin-bottom:14px; font-size:.92rem; }
+  th, td { border:1px solid var(--line); padding:8px 10px; text-align:left; color:#c9c9d2; }
+  th { background:var(--panel); }
+  footer { border-top:1px solid var(--line); margin-top:50px; padding-top:20px; color:var(--dim); font-size:.85rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<p class="crumb"><a href="../index.html">AI Influencer Pipeline</a> / <a href="index.html">Guides</a></p>
+<h1>n8n vs Zapier vs Make for AI Content Pipelines</h1>
+<p class="meta">Updated June 2026 · Written from a live production system, not theory.</p>
+
+<p>Short answer: for an AI content pipeline that runs hundreds of operations a day, self-hosted n8n is the only economically sane option. Longer answer below, including where the others win.</p>
+
+<h2>The cost math that decides it</h2>
+<p>A daily AI-influencer pipeline (generation, QC retries, approvals, publishing, replies, metrics) executes 200–600 operations per day. Zapier and Make price per operation/task; at this volume you're in their upper tiers — real money every month, forever. Self-hosted n8n is free software on a ~$6 VPS, unlimited executions. The pipeline's economics only work because the orchestration layer costs nothing.</p>
+
+<h2>Capability differences that matter for AI pipelines</h2>
+<table>
+<tr><th></th><th>n8n (self-hosted)</th><th>Zapier</th><th>Make</th></tr>
+<tr><td>Cost at 10k+ ops/month</td><td>$0 + VPS</td><td>$$$</td><td>$$</td></tr>
+<tr><td>Real code nodes (JS)</td><td>Yes, first-class</td><td>Limited</td><td>Limited</td></tr>
+<tr><td>Loops / retry with feedback</td><td>Native</td><td>Awkward</td><td>Possible, fiddly</td></tr>
+<tr><td>Call any API (raw HTTP)</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+<tr><td>Webhooks in</td><td>Free, unlimited</td><td>Plan-gated</td><td>Plan-gated</td></tr>
+<tr><td>Data stays on your server</td><td>Yes</td><td>No</td><td>No</td></tr>
+<tr><td>Setup effort</td><td>Hours (Docker/npx)</td><td>Minutes</td><td>Minutes</td></tr>
+</table>
+<p>The killer features for AI work are the code nodes and loop control: a quality-control gate with "max 3 attempts, feed the failure reason back into the prompt" is a few nodes in n8n and a contortion act elsewhere.</p>
+
+<h2>When NOT to use n8n</h2>
+<ul>
+<li>You run 5 simple zaps a month — Zapier's polish wins, cost is irrelevant at that volume.</li>
+<li>Nobody on the team can maintain a server. Self-hosting means you own updates and backups (an hour a month, but a real hour).</li>
+<li>You need certified enterprise connectors with SLAs.</li>
+</ul>
+
+<h2>n8n gotchas to know going in</h2>
+<ul>
+<li>Default timezone is America/New_York — set <code>GENERIC_TIMEZONE</code> before trusting any cron.</li>
+<li>Workflow imports arrive deactivated and credentials don't travel with JSON exports — re-link after import.</li>
+<li>In single-item flows after an HTTP Request node, use <code>.first().json</code> rather than <code>.item.json</code> — paired-item tracking breaks through HTTP nodes.</li>
+</ul>
+
+<div class="cta">If you choose n8n, the <a href="https://lionheart886.gumroad.com/l/ai-influencer-pipeline-kit">AI Influencer Pipeline Kit</a> is 13 production workflows you don't have to build.</div>
+<footer>All guides are based on the stack behind a real automated Instagram persona.
+Get the full working system: <a href="https://lionheart886.gumroad.com/l/ai-influencer-pipeline-kit">AI Influencer Pipeline Kit</a>
+· <a href="https://lionheart886.gumroad.com/l/reel-dna-extractor">Reel DNA Extractor</a></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Reels Go Viral: Analyzing Structure, Motion, and Camera Language as Data</title>
+<meta name="description" content="A method for decoding viral reels into reusable structure: cut timelines, motion energy, camera language, lighting — and how to apply the blueprint to your own content.">
+<style>
+  :root { --bg:#0a0a0c; --panel:#141418; --text:#e8e8ec; --dim:#9a9aa4; --accent:#ff90e8; --line:#26262c; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font:17px/1.7 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:40px 20px 80px; }
+  a { color:var(--accent); }
+  h1 { font-size:2rem; line-height:1.25; margin:18px 0 6px; letter-spacing:-.4px; }
+  h2 { font-size:1.35rem; margin:34px 0 10px; }
+  h3 { font-size:1.1rem; margin:24px 0 8px; }
+  p, li { color:#c9c9d2; margin-bottom:14px; }
+  ul, ol { margin:0 0 14px 22px; }
+  li { margin-bottom:6px; }
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:1px 6px; font-size:.9em; }
+  pre { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:14px; overflow-x:auto; margin-bottom:14px; }
+  pre code { border:0; padding:0; }
+  .crumb { color:var(--dim); font-size:.85rem; }
+  .crumb a { color:var(--dim); }
+  .meta { color:var(--dim); font-size:.9rem; margin-bottom:24px; }
+  .cta { background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:0 10px 10px 0; padding:18px 20px; margin:30px 0; }
+  .cta a { font-weight:700; }
+  table { border-collapse:collapse; width:100%; margin-bottom:14px; font-size:.92rem; }
+  th, td { border:1px solid var(--line); padding:8px 10px; text-align:left; color:#c9c9d2; }
+  th { background:var(--panel); }
+  footer { border-top:1px solid var(--line); margin-top:50px; padding-top:20px; color:var(--dim); font-size:.85rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<p class="crumb"><a href="../index.html">AI Influencer Pipeline</a> / <a href="index.html">Guides</a></p>
+<h1>Decoding Viral Reels into Reusable Blueprints</h1>
+<p class="meta">Updated June 2026 · Written from a live production system, not theory.</p>
+
+<p>"Study what works in your niche" is advice everyone gives and nobody operationalizes. Here's how to turn a high-performing reel into structured data you can actually reuse — what we call its DNA.</p>
+
+<h2>The five layers worth extracting</h2>
+<ol>
+<li><strong>Cut timeline.</strong> How many shots, how long each holds, where the rhythm changes. Most viral short-form sits between 1 and 4 cuts — and the first cut's timing is the retention hook.</li>
+<li><strong>Subject motion.</strong> What the performer physically does, beat by beat, and the energy curve: where motion is sharp, where it settles. This is the layer that text prompts describe worst and that matters most.</li>
+<li><strong>Camera language.</strong> Distance (close/medium/full), angle, and movement (locked, handheld drift, push-in). "Phone-shot handheld at chest height" reads completely differently from "locked tripod full-body".</li>
+<li><strong>Lighting and grade.</strong> Source direction, hardness, color temperature, and the finish: clean vs grain, lifted blacks vs crushed. Aesthetic consistency across posts comes from copying this layer precisely.</li>
+<li><strong>Format skeleton.</strong> Hook (first 1.5s), development, payoff. Strip the specific subject and the skeleton transfers across niches.</li>
+</ol>
+
+<h2>The practical method</h2>
+<p>Extract 6–10 evenly spaced frames from the reel plus the audio-stripped clip, and have a vision model describe each layer in structured JSON. The critical prompt-engineering detail: ask for <em>observable facts</em> (shot lengths in seconds, light direction) rather than interpretations ("energetic vibe") — facts are reusable, vibes are not.</p>
+
+<h2>Using a blueprint</h2>
+<ul>
+<li><strong>For AI generation:</strong> recreate the first frame with your character (pose, framing, lighting from the blueprint), then drive motion with the blueprint's motion description — or with the original video via motion control. See the <a href="kling-motion-control-guide.html">Kling guide</a>.</li>
+<li><strong>For human creators:</strong> the blueprint is a shot list. Same cuts, same camera positions, your subject.</li>
+<li><strong>For strategy:</strong> blueprint your niche's top 50 reels and patterns jump out — recurring skeletons, dominant lighting, the 2–3 formats that actually carry the niche. Make those before inventing new ones.</li>
+</ul>
+
+<p>One ethical line: blueprints describe structure; they don't copy content. Recreate <em>formats</em> with your own subject and styling — don't reproduce someone's actual footage or identity.</p>
+
+<div class="cta">The <a href="https://lionheart886.gumroad.com/l/reel-dna-extractor">Reel DNA Extractor</a> automates this entire analysis — any reel URL in, structured JSON blueprint out, Kling motion prompt included.</div>
+<footer>All guides are based on the stack behind a real automated Instagram persona.
+Get the full working system: <a href="https://lionheart886.gumroad.com/l/ai-influencer-pipeline-kit">AI Influencer Pipeline Kit</a>
+· <a href="https://lionheart886.gumroad.com/l/reel-dna-extractor">Reel DNA Extractor</a></footer>
+</div>
+</body>
+</html>
