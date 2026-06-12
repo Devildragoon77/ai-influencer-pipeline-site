@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cara Membuat AI Influencer di 2026 (Arsitektur Lengkap + Biaya Nyata)</title>
+<meta name="description" content="Panduan lengkap membuat AI influencer yang posting otomatis ke Instagram: desain persona, pipeline n8n, API resmi Instagram, quality control, dan biaya bulanan sebenarnya.">
+<style>
+  :root { --bg:#0a0a0c; --panel:#141418; --text:#e8e8ec; --dim:#9a9aa4; --accent:#ff90e8; --line:#26262c; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font:17px/1.7 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:40px 20px 80px; }
+  a { color:var(--accent); }
+  h1 { font-size:2rem; line-height:1.25; margin:18px 0 6px; letter-spacing:-.4px; }
+  h2 { font-size:1.35rem; margin:34px 0 10px; }
+  h3 { font-size:1.1rem; margin:24px 0 8px; }
+  p, li { color:#c9c9d2; margin-bottom:14px; }
+  ul, ol { margin:0 0 14px 22px; }
+  li { margin-bottom:6px; }
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:1px 6px; font-size:.9em; }
+  pre { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:14px; overflow-x:auto; margin-bottom:14px; }
+  pre code { border:0; padding:0; }
+  .crumb { color:var(--dim); font-size:.85rem; }
+  .crumb a { color:var(--dim); }
+  .meta { color:var(--dim); font-size:.9rem; margin-bottom:24px; }
+  .cta { background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:0 10px 10px 0; padding:18px 20px; margin:30px 0; }
+  .cta a { font-weight:700; }
+  table { border-collapse:collapse; width:100%; margin-bottom:14px; font-size:.92rem; }
+  th, td { border:1px solid var(--line); padding:8px 10px; text-align:left; color:#c9c9d2; }
+  th { background:var(--panel); }
+  footer { border-top:1px solid var(--line); margin-top:50px; padding-top:20px; color:var(--dim); font-size:.85rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<p class="crumb"><a href="../../index.html">AI Influencer Pipeline</a> / <a href="index.html">Panduan</a> · <a href="../index.html">English version</a></p>
+<h1>Cara Membuat AI Influencer di 2026</h1>
+<p class="meta">Diperbarui Juni 2026 · Ditulis dari sistem produksi yang benar-benar jalan, bukan teori.</p>
+
+<p>Kebanyakan tutorial "cara bikin AI influencer" berhenti di generate wajah cantik. Padahal yang menentukan sukses adalah sistem produksinya: pipeline yang posting setiap hari tanpa kamu, dengan kualitas yang cukup tinggi supaya akunnya benar-benar tumbuh.</p>
+
+<h2>Arsitektur yang terbukti jalan</h2>
+<ol>
+<li><strong>Riset</strong> — scrape akun-akun benchmark di niche kamu dan ekstrak apa yang bikin konten mereka perform: pose, framing, pencahayaan, color grade. Kami menyebutnya "Visual DNA". Generate dari prompt kosong hasilnya generik; mereplikasi format yang terbukti hasilnya nyambung dengan selera niche.</li>
+<li><strong>Generasi</strong> — model image dengan face reference yang dikunci. Aset terpenting adalah SATU foto portrait persona yang bersih dan pencahayaannya netral: semua gambar berikutnya dikondisikan dari situ. Wajah yang berubah-ubah adalah pembunuh kualitas nomor satu.</li>
+<li><strong>Quality control</strong> — gerbang AI (kami pakai Claude) yang menilai tiap hasil PASS/FAIL terhadap spesifikasi, dan alasan gagalnya dimasukkan kembali ke prompt berikutnya. Maksimal 3 percobaan. Tanpa ini, feed kamu penuh tangan berjari enam.</li>
+<li><strong>Persetujuan manusia</strong> — setiap konten masuk ke Telegram dengan tombol approve/reject. Cuma ~5 menit per hari dan ini wajib: konten AI tanpa review adalah jalan tercepat akun kena masalah kebijakan.</li>
+<li><strong>Publishing</strong> — Instagram Graph API resmi dengan Meta developer app milikmu sendiri. Otomasi akun sendiri tidak perlu app review. Bot browser bikin akun kena banned; API resmi tidak.</li>
+</ol>
+
+<h2>Keputusan desain persona yang penting</h2>
+<ul>
+<li><strong>Buka-bukaan bahwa persona ini AI.</strong> Ini kebijakan Instagram, dan persona yang ketahuan belakangan kehilangan semua peluang brand deal. Audiens Gen-Z 2026 tidak masalah dengan AI yang jujur.</li>
+<li><strong>Kunci identitas di fitur wajah, bukan ekspresi.</strong> Blok identitas mendeskripsikan rambut, mata, kulit, postur — sementara pose, arah pandang, dan ekspresi mengikuti foto benchmark. Ekspresi yang di-hardcode bikin semua post terlihat sama.</li>
+<li><strong>Pilih niche dengan format visual yang bisa direplikasi</strong> — fashion, fitness, lifestyle. Niche tutorial atau talking-head tidak cocok dengan pipeline ini.</li>
+</ul>
+
+<h2>Biaya bulanan (terverifikasi Juni 2026)</h2>
+<table>
+<tr><th>Komponen</th><th>Per bulan</th></tr>
+<tr><td>n8n (self-hosted, mesin otomasinya)</td><td>Rp 0</td></tr>
+<tr><td>VPS 24/7 (opsional)</td><td>~Rp 100rb ($6)</td></tr>
+<tr><td>Claude API (caption, Visual DNA, QC)</td><td>Rp 50–160rb</td></tr>
+<tr><td>Apify (scraping benchmark)</td><td>~Rp 80rb</td></tr>
+<tr><td>Kredit generate gambar/video</td><td>Rp 0–500rb tergantung frekuensi</td></tr>
+</table>
+<p>Total kasar: Rp 250rb–800rb/bulan untuk akun yang posting harian. Yang mahal adalah video (reels) — lihat <a href="kling-motion-control.html">panduan Kling motion control</a>.</p>
+
+<h2>Ekspektasi waktu</h2>
+<p>Setup: satu akhir pekan kalau kamu teknis. Pertumbuhan: berbulan-bulan — otomasi menyelesaikan produksi, bukan audiens. Akun yang menang memperlakukan pipeline sebagai mesin konsistensi: tidak pernah bolong posting, tidak pernah burnout, dan jam manusiamu bebas untuk hal yang tidak bisa diotomasi (pilihan niche, kolab, outreach brand).</p>
+
+<div class="cta">Lewati 6 bulan ngoding — sistem produksi yang dijelaskan di sini sudah dipaketkan sebagai <a href="https://lionheart886.gumroad.com/l/ai-influencer-pipeline-kit">AI Influencer Pipeline Kit</a> (dokumentasi bahasa Inggris).</div>
+<footer>Semua panduan berdasarkan stack di balik persona Instagram otomatis yang nyata.
+Sistem lengkapnya: <a href="https://lionheart886.gumroad.com/l/ai-influencer-pipeline-kit">AI Influencer Pipeline Kit</a>
+· <a href="https://lionheart886.gumroad.com/l/reel-dna-extractor">Reel DNA Extractor</a></footer>
+</div>
+</body>
+</html>

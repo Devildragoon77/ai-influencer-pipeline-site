@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auto-Posting Instagram dengan Graph API Resmi + n8n (Panduan 2026)</title>
+<meta name="description" content="Cara posting otomatis ke Instagram (feed, story, reels) pakai Graph API resmi dan n8n — setup token, alur publish dua langkah, dan jebakan-jebakan yang bikin gagal.">
+<style>
+  :root { --bg:#0a0a0c; --panel:#141418; --text:#e8e8ec; --dim:#9a9aa4; --accent:#ff90e8; --line:#26262c; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font:17px/1.7 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:40px 20px 80px; }
+  a { color:var(--accent); }
+  h1 { font-size:2rem; line-height:1.25; margin:18px 0 6px; letter-spacing:-.4px; }
+  h2 { font-size:1.35rem; margin:34px 0 10px; }
+  h3 { font-size:1.1rem; margin:24px 0 8px; }
+  p, li { color:#c9c9d2; margin-bottom:14px; }
+  ul, ol { margin:0 0 14px 22px; }
+  li { margin-bottom:6px; }
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:1px 6px; font-size:.9em; }
+  pre { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:14px; overflow-x:auto; margin-bottom:14px; }
+  pre code { border:0; padding:0; }
+  .crumb { color:var(--dim); font-size:.85rem; }
+  .crumb a { color:var(--dim); }
+  .meta { color:var(--dim); font-size:.9rem; margin-bottom:24px; }
+  .cta { background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:0 10px 10px 0; padding:18px 20px; margin:30px 0; }
+  .cta a { font-weight:700; }
+  table { border-collapse:collapse; width:100%; margin-bottom:14px; font-size:.92rem; }
+  th, td { border:1px solid var(--line); padding:8px 10px; text-align:left; color:#c9c9d2; }
+  th { background:var(--panel); }
+  footer { border-top:1px solid var(--line); margin-top:50px; padding-top:20px; color:var(--dim); font-size:.85rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<p class="crumb"><a href="../../index.html">AI Influencer Pipeline</a> / <a href="index.html">Panduan</a> · <a href="../index.html">English version</a></p>
+<h1>Auto-Posting Instagram: Graph API Resmi + n8n</h1>
+<p class="meta">Diperbarui Juni 2026 · Ditulis dari sistem produksi yang benar-benar jalan, bukan teori.</p>
+
+<p>Kamu tidak butuh tools penjadwalan berbayar atau bot browser yang berisiko untuk auto-posting ke Instagram. Graph API resmi bisa handle post, story, dan reels — gratis, legal, dan stabil. Ini setup yang terbukti jalan.</p>
+
+<h2>Prasyarat</h2>
+<ul>
+<li>Akun Instagram <strong>profesional</strong> (creator/bisnis) yang terhubung ke Facebook Page</li>
+<li>Meta developer app rasa Instagram-Login dengan use case "Manage messaging & content"</li>
+<li>Long-lived token dengan <code>instagram_business_basic</code> dan <code>instagram_business_content_publish</code></li>
+</ul>
+<p>Dua fakta yang menghemat berjam-jam: token jenis ini memanggil <code>graph.instagram.com</code> (bukan graph.facebook.com), dan otomasi akun sendiri cukup standard access — <strong>tidak perlu Meta app review</strong>.</p>
+
+<h2>Alur publish dua langkah</h2>
+<pre><code>POST https://graph.instagram.com/v23.0/{ig-user-id}/media
+     ?image_url={url-publik}&caption={caption}&access_token={token}
+# balikannya {"id": "container-id"}
+
+POST https://graph.instagram.com/v23.0/{ig-user-id}/media_publish
+     ?creation_id={container-id}&access_token={token}</code></pre>
+<p>Di n8n ini dua node HTTP Request dengan Wait pendek di antaranya (container butuh beberapa detik diproses; untuk reels, poll <code>status_code</code> container sampai <code>FINISHED</code>).</p>
+<ul>
+<li><strong>Story:</strong> alur sama dengan <code>media_type=STORIES</code></li>
+<li><strong>Reels:</strong> <code>media_type=REELS</code> + <code>video_url</code> (harus .mp4 yang bisa diakses publik)</li>
+<li><strong>Hosting gambar:</strong> API mengambil media lewat URL, jadi hasil generate harus di-host dulu — akun gratis Cloudinary cukup.</li>
+</ul>
+
+<h2>Jebakan dari pengalaman produksi</h2>
+<ul>
+<li><strong>Timezone default n8n adalah America/New_York.</strong> Kalau instance-mu belum diset, cron "jam 8 malam" jalan jam 8 malam waktu New York — set <code>GENERIC_TIMEZONE=Asia/Jakarta</code> atau per-workflow <code>settings.timezone</code>.</li>
+<li><strong>Page token kedaluwarsa (~60 hari).</strong> Pasang reminder rotasi; token mati diam-diam adalah penyebab "kok berhenti posting" paling umum.</li>
+<li><strong>Pakai content queue, jangan posting langsung.</strong> Google Sheet dengan kolom <code>id | status | image_url | caption | scheduled_time</code> memungkinkan approval sebelum workflow publisher mengambil baris <code>approved</code>. Memisahkan generasi dari publishing inilah yang bikin sistem aman ditinggal.</li>
+<li><strong>Link sticker di story tidak bisa lewat API</strong> — tetap manual. Highlights juga tidak ada API publiknya.</li>
+</ul>
+
+<div class="cta">Semua ini sudah jadi di <a href="https://lionheart886.gumroad.com/l/ai-influencer-pipeline-kit">AI Influencer Pipeline Kit</a> — 13 workflow n8n siap import, termasuk publisher untuk post, story, dan reels.</div>
+<footer>Semua panduan berdasarkan stack di balik persona Instagram otomatis yang nyata.
+Sistem lengkapnya: <a href="https://lionheart886.gumroad.com/l/ai-influencer-pipeline-kit">AI Influencer Pipeline Kit</a>
+· <a href="https://lionheart886.gumroad.com/l/reel-dna-extractor">Reel DNA Extractor</a></footer>
+</div>
+</body>
+</html>

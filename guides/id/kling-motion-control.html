@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kling Motion Control: Transfer Gerakan Reel Asli ke Karakter AI (2026)</title>
+<meta name="description" content="Cara kerja Kling V3 Omni motion control, biayanya, dan cara memakai video referensi untuk menggerakkan karakter AI untuk reels Instagram/TikTok.">
+<style>
+  :root { --bg:#0a0a0c; --panel:#141418; --text:#e8e8ec; --dim:#9a9aa4; --accent:#ff90e8; --line:#26262c; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font:17px/1.7 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:40px 20px 80px; }
+  a { color:var(--accent); }
+  h1 { font-size:2rem; line-height:1.25; margin:18px 0 6px; letter-spacing:-.4px; }
+  h2 { font-size:1.35rem; margin:34px 0 10px; }
+  h3 { font-size:1.1rem; margin:24px 0 8px; }
+  p, li { color:#c9c9d2; margin-bottom:14px; }
+  ul, ol { margin:0 0 14px 22px; }
+  li { margin-bottom:6px; }
+  code { background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:1px 6px; font-size:.9em; }
+  pre { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:14px; overflow-x:auto; margin-bottom:14px; }
+  pre code { border:0; padding:0; }
+  .crumb { color:var(--dim); font-size:.85rem; }
+  .crumb a { color:var(--dim); }
+  .meta { color:var(--dim); font-size:.9rem; margin-bottom:24px; }
+  .cta { background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:0 10px 10px 0; padding:18px 20px; margin:30px 0; }
+  .cta a { font-weight:700; }
+  table { border-collapse:collapse; width:100%; margin-bottom:14px; font-size:.92rem; }
+  th, td { border:1px solid var(--line); padding:8px 10px; text-align:left; color:#c9c9d2; }
+  th { background:var(--panel); }
+  footer { border-top:1px solid var(--line); margin-top:50px; padding-top:20px; color:var(--dim); font-size:.85rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<p class="crumb"><a href="../../index.html">AI Influencer Pipeline</a> / <a href="index.html">Panduan</a> · <a href="../index.html">English version</a></p>
+<h1>Kling Motion Control: Gerakan Asli di Karakter AI</h1>
+<p class="meta">Diperbarui Juni 2026 · Ditulis dari sistem produksi yang benar-benar jalan, bukan teori.</p>
+
+<p>Video AI dari teks punya plafon: kamu bisa mendeskripsikan koreografi, tapi model yang mengarang performanya, dan identitas wajah cenderung bergeser tiap detik. Motion control membaliknya — kamu memberi <em>video referensi</em> dan model mentransfer gerakan performer aslinya ke karaktermu.</p>
+
+<h2>Apa yang dilakukan Kling V3 Omni</h2>
+<p>Dua input: <strong>gambar frame awal</strong> (karaktermu — identitas, outfit, scene) dan <strong>video referensi</strong> (3–30 detik performa nyata). Output mempertahankan identitas karaktermu sambil mereproduksi gerakan tubuh, timing gestur, dan energi referensinya. Di tes produksi kami, identitas bertahan jauh lebih baik daripada koreografi teks.</p>
+
+<h2>Realita biaya (Juni 2026)</h2>
+<table>
+<tr><th>Mode</th><th>Biaya</th><th>Catatan</th></tr>
+<tr><td>Image-to-video biasa (koreografi teks)</td><td>~13 kredit/detik</td><td>5 dtk ≈ 65 kredit</td></tr>
+<tr><td>V3 Omni motion control</td><td>15 kredit/detik</td><td>5 dtk = 75, 10 dtk = 150</td></tr>
+</table>
+<p>Biaya mengikuti panjang output, bukan kerumitan. Mulai dari klip 5 detik: panjang jarang jadi alasan reel gagal, dan biayanya setengah.</p>
+
+<h2>Alur kerja yang hasilnya meyakinkan</h2>
+<ol>
+<li><strong>Pilih reel benchmark</strong> dengan subjek manusia dan cut sedikit (≤4). Cut adalah musuh: mendorong gerakan melewati batas cut bikin karakter "teleport" antar-pose.</li>
+<li><strong>Replikasi frame pertamanya</strong> dengan karaktermu: pose, framing, scene, cahaya sama, identitas karaktermu. Generate di 9:16 (1080×1920) — Kling mengikuti rasio gambar sumbernya.</li>
+<li><strong>Jalankan motion control</strong> dengan gambar itu + video benchmark, dengan prompt menjaga identitas dan mentransfer gerakan N detik pertama.</li>
+<li><strong>Tetap pakai approval manusia</strong> sebelum publish. Motion transfer itu bagus, bukan sempurna — tangan dan putaran cepat masih kadang gagal.</li>
+</ol>
+
+<h2>Peringatan praktis</h2>
+<ul>
+<li>Generasi tetap jalan di server walau client-mu timeout — poll hasilnya, jangan retry (retry = bayar dua kali).</li>
+<li>Reel panjang: potong di batas cut, generate per segmen, gabungkan dengan ffmpeg.</li>
+<li>Etika/kebijakan: transfer <em>gaya gerakan</em>, buka status AI kontenmu, dan jangan mereproduksi orang yang bisa dikenali. Gerakannya adalah teknik; identitasnya harus milikmu.</li>
+</ul>
+
+<div class="cta"><a href="https://lionheart886.gumroad.com/l/reel-dna-extractor">Reel DNA Extractor</a> mengubah reel apapun jadi blueprint gerakan siap pakai — termasuk motion prompt Kling-nya.</div>
+<footer>Semua panduan berdasarkan stack di balik persona Instagram otomatis yang nyata.
+Sistem lengkapnya: <a href="https://lionheart886.gumroad.com/l/ai-influencer-pipeline-kit">AI Influencer Pipeline Kit</a>
+· <a href="https://lionheart886.gumroad.com/l/reel-dna-extractor">Reel DNA Extractor</a></footer>
+</div>
+</body>
+</html>
