@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Influencer Pipeline — Automate an Instagram Persona with n8n + Official API</title>
+<meta name="description" content="The working production system behind a live automated AI influencer: 13 n8n workflows for posts, stories, reels, DMs — official Instagram Graph API, Telegram approval, AI quality control. Plus the Reel DNA analyzer that turns any reel into a generation blueprint.">
+<meta property="og:title" content="AI Influencer Pipeline Kit">
+<meta property="og:description" content="Run a fully automated AI influencer on Instagram. 13 n8n workflows, official API, human approval gate. Working system, not a course.">
+<meta property="og:image" content="https://USERNAME.github.io/ai-influencer-pipeline-site/hero.jpg">
+<style>
+  :root { --bg:#0a0a0c; --panel:#141418; --text:#e8e8ec; --dim:#9a9aa4; --accent:#ff90e8; --line:#26262c; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font:16px/1.6 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  .wrap { max-width:880px; margin:0 auto; padding:0 20px; }
+  header { padding:72px 0 40px; text-align:center; }
+  h1 { font-size:2.4rem; line-height:1.2; letter-spacing:-.5px; }
+  h1 span { color:var(--accent); }
+  .sub { color:var(--dim); margin:18px auto 0; max-width:620px; font-size:1.1rem; }
+  .hero-img { width:100%; border-radius:12px; margin:36px 0 8px; border:1px solid var(--line); }
+  .vid { display:block; width:260px; margin:36px auto 8px; border-radius:12px; border:1px solid var(--line); }
+  .cap { text-align:center; color:var(--dim); font-size:.85rem; margin-bottom:8px; }
+  section { padding:44px 0; border-top:1px solid var(--line); }
+  h2 { font-size:1.5rem; margin-bottom:18px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; margin-top:20px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:22px; }
+  .card h3 { font-size:1.05rem; margin-bottom:8px; }
+  .card p { color:var(--dim); font-size:.92rem; }
+  .price { color:var(--accent); font-weight:700; font-size:1.3rem; margin:10px 0 2px; }
+  .btn { display:inline-block; background:var(--accent); color:#000; font-weight:700; padding:12px 26px; border-radius:8px; text-decoration:none; margin-top:14px; }
+  .btn.ghost { background:transparent; color:var(--accent); border:1px solid var(--accent); }
+  ul.feat { list-style:none; margin-top:10px; }
+  ul.feat li { padding:7px 0 7px 26px; position:relative; color:var(--dim); }
+  ul.feat li::before { content:"✓"; position:absolute; left:0; color:var(--accent); }
+  .honest { background:var(--panel); border-left:3px solid var(--accent); border-radius:0 10px 10px 0; padding:18px 20px; color:var(--dim); font-size:.95rem; margin-top:24px; }
+  footer { padding:40px 0 60px; color:var(--dim); font-size:.85rem; text-align:center; border-top:1px solid var(--line); }
+  footer a { color:var(--accent); text-decoration:none; }
+  .center { text-align:center; }
+  @media (max-width:600px){ h1{font-size:1.7rem} }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <h1>This influencer doesn't exist.<br>Everything she posts is <span>automated</span>.</h1>
+  <p class="sub">The working production system behind a live AI persona on Instagram —
+  posts, stories, reels, and replies, generated and published by 13 n8n workflows
+  through the <strong>official Instagram Graph API</strong>. You approve content with
+  one tap on Telegram. That's the whole job.</p>
+  <video class="vid" src="demo.mp4" autoplay loop muted playsinline></video>
+  <p class="cap">Reel DNA engine: benchmark reel (blurred) → same first frame, her own performance</p>
+</header>
+
+<section class="wrap" id="how">
+  <h2>How it works</h2>
+  <ul class="feat">
+    <li><strong>Studies what already works</strong> — scrapes benchmark accounts in your niche and extracts each post's "Visual DNA": pose, framing, lighting, color grade</li>
+    <li><strong>Regenerates it with your persona</strong> — face locked by a reference image, outfit and identity consistent across every post</li>
+    <li><strong>AI quality gate</strong> — Claude judges each generation PASS/FAIL against spec; failures feed back into the next attempt, max 3 tries</li>
+    <li><strong>Human approval</strong> — every item lands in Telegram with ✅/❌ buttons before publishing; rejected items regenerate themselves</li>
+    <li><strong>Reels included</strong> — extracts the motion DNA of any reference reel and transfers the performance onto your persona with Kling motion control</li>
+    <li><strong>Official API only for publishing</strong> — your own Meta app and tokens, the same mechanism scheduling tools use; no browser bots touching your account</li>
+  </ul>
+  <img class="hero-img" src="hero.jpg" alt="Benchmark vs generated comparison">
+</section>
+
+<section class="wrap" id="products">
+  <h2>Get the system</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Full Pipeline Kit</h3>
+      <p>All 13 n8n workflows, the Flask sidecar, reel scripts, full setup guide with real cost numbers, and the honest disclaimer other sellers won't write.</p>
+      <div class="price">$149</div>
+      <a class="btn" href="https://lionheart886.gumroad.com/l/ai-influencer-pipeline-kit">Get the kit</a>
+    </div>
+    <div class="card">
+      <h3>Reel DNA Extractor</h3>
+      <p>The analysis layer only: turn any Instagram reel into a structured generation blueprint (cuts, motion, camera, lighting, ready-to-use Kling motion prompt).</p>
+      <div class="price">$39</div>
+      <a class="btn" href="https://lionheart886.gumroad.com/l/reel-dna-extractor">Get the extractor</a>
+    </div>
+    <div class="card">
+      <h3>50 Reel Blueprints</h3>
+      <p>Don't want to run infrastructure? A curated pack of 50 viral-reel DNA files in the dark-fashion niche — ready to feed into Kling or any i2v model.</p>
+      <div class="price">$19</div>
+      <a class="btn ghost" href="https://lionheart886.gumroad.com">Coming this week</a>
+    </div>
+  </div>
+  <div class="honest">
+    <strong>Honest fine print:</strong> publishing uses the official Instagram API; image/video
+    generation uses Lovart, which has no public API — the docs spell out the risk and the
+    official-API swap points (fal.ai, Kling API, Higgsfield). The kit automates production,
+    not audience-building. Disclose your AI persona; it's platform policy and it's what keeps
+    brand deals alive.
+  </div>
+</section>
+
+<section class="wrap center" id="follow">
+  <h2>Get the free template + launch discounts</h2>
+  <p class="sub" style="margin-bottom:6px">Follow on Gumroad — buyers and followers get new-product
+  discounts first. A free Instagram-metrics-to-Telegram n8n template is on the way.</p>
+  <a class="btn" href="https://lionheart886.gumroad.com">Follow on Gumroad</a>
+</section>
+
+<footer class="wrap">
+  Built by James — a real automated persona runs on this exact stack.
+  <br>Questions: ask via <a href="https://lionheart886.gumroad.com">Gumroad</a> · No cookies, no tracking on this page.
+</footer>
+
+</body>
+</html>
